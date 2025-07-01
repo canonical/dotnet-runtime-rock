@@ -1,0 +1,13 @@
+# rock
+*.rock
+
+# OS Files
+.DS_store
+
+# Spread
+spread.yaml
+
+# IDE
+.vs_code/
+.vscode/
+.idea/
