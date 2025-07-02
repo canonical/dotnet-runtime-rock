@@ -1,0 +1,46 @@
+name: dotnet-runtime
+build-base: ubuntu@24.04
+base: bare
+version: '9.0'
+summary: The .NET runtime
+description: |
+  .NET is a free, cross-platform, open source developer platform for building
+  many different types of applications. This image contains the .NET runtime,
+  but does not include bash, the .NET SDK nor a package manager.
+platforms:
+  amd64:
+  arm64:
+
+environment:
+  APP_UID: 584792
+  ASPNETCORE_URLS: 'http://+:8080'
+  DOTNET_RUNNING_IN_CONTAINER: 'true'
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 'true'
+
+run-user: _daemon_
+
+entrypoint-service: dotnet-runtime
+
+services:
+  dotnet-runtime:
+    override: replace
+    startup: enabled
+    command: "/usr/bin/dotnet [ --info ]"
+    on-success: shutdown
+    on-failure: shutdown
+
+parts:
+  deps:
+    plugin: nil
+    override-build: |
+      chisel cut --release ubuntu-25.04 \
+        --root ${CRAFT_PART_INSTALL} \
+        base-files_base \
+        base-files_release-info \
+        base-files_chisel \
+        ca-certificates_data \
+        dotnet-runtime-9.0_libs
+      mv ${CRAFT_PART_INSTALL}/usr/lib/dotnet/dotnet9 ${CRAFT_PART_INSTALL}/usr/lib/dotnet/dotnet \
+      && ln -s ../lib/dotnet/dotnet ${CRAFT_PART_INSTALL}/usr/bin/dotnet
+
+

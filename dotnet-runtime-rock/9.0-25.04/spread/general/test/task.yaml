@@ -1,0 +1,8 @@
+summary: test the 'my-rock-name' project
+
+execute: |
+  docker run --rm -v $(pwd):/app ubuntu:25.04 bash -c 'apt update && apt install dotnet-sdk-9.0 -y; for test_dir in "app_helloworld" "app_https-client"; do cd /app/${test_dir}/src && dotnet publish --no-self-contained -r linux-x64; done'
+
+  for test_dir in "app_helloworld" "app_https-client"; do
+    docker run --rm -v $(pwd)/${test_dir}/src:/app:ro -e PEBBLE_VERBOSE=1 my-rock-name /app/bin/Release/net9.0/linux-x64/Hello.dll
+  done
