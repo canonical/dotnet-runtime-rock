@@ -19,8 +19,6 @@ environment:
 
 run-user: _daemon_
 
-entrypoint-service: dotnet-runtime
-
 services:
   dotnet-runtime:
     override: replace
