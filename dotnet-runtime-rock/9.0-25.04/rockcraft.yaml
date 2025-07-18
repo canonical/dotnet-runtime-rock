@@ -28,7 +28,7 @@ services:
     on-failure: shutdown
 
 parts:
-  deps:
+  runtime:
     plugin: nil
     override-build: |
       chisel cut --release ubuntu-25.04 \
@@ -41,4 +41,10 @@ parts:
       mv ${CRAFT_PART_INSTALL}/usr/lib/dotnet/dotnet9 ${CRAFT_PART_INSTALL}/usr/lib/dotnet/dotnet \
       && ln -s ../lib/dotnet/dotnet ${CRAFT_PART_INSTALL}/usr/bin/dotnet
 
-
+  deb-security-manifest:
+    after: [runtime]
+    plugin: make
+    source: https://github.com/canonical/rocks-security-manifest
+    source-type: git
+    source-branch: main
+    override-prime: gen_manifest
