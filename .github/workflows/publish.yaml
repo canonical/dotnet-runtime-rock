@@ -21,7 +21,7 @@ jobs:
       - id: set-map
         run: |
           if [[ "${{ github.repository_owner }}" == "canonical" ]]; then
-            echo 'arch-map={"amd64":["noble","X64","large"],"arm64":["noble","ARM64","large"]}' >> $GITHUB_OUTPUT
+            echo 'arch-map={"amd64":["noble","X64","large"],"arm64":["noble","ARM64","large"],"ppc64el":["ppc64el"],"s390x":["s390x"]}' >> $GITHUB_OUTPUT
           else
             echo 'arch-map={"amd64":["ubuntu-24.04"],"arm64":["ubuntu-24.04-arm"]}' >> $GITHUB_OUTPUT
           fi
