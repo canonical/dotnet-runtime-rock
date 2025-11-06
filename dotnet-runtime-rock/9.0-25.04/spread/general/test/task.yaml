@@ -4,6 +4,8 @@ execute: |
   case "$(uname -m)" in
     x86_64) rid="linux-x64" ;;
     aarch64) rid="linux-arm64" ;;
+    s390x) rid="linux-s390x" ;;
+    ppc64le) rid="linux-ppc64le" ;;
     *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
   esac
 
