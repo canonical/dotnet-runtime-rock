@@ -5,7 +5,10 @@
 .DS_store
 
 # Spread
-spread.yaml
+.craft-spread*/
+.spread-reuse*
+spread/**/bin
+spread/**/obj
 
 # IDE
 .vs_code/

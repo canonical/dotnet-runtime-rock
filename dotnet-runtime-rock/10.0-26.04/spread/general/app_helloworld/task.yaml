@@ -1,0 +1,6 @@
+summary: test dotnet-runtime-rock
+
+execute: |
+  docker run --rm -v $(pwd)/src:/app -w /app ubuntu:26.04 bash -c 'apt update && apt install dotnet-sdk-10.0 -y; dotnet publish --no-self-contained'
+
+  docker run --rm -v $(pwd)/src:/app:ro -e PEBBLE_VERBOSE=1 my-rock-name exec /usr/bin/dotnet "/app/bin/Release/net10.0/Hello.dll"

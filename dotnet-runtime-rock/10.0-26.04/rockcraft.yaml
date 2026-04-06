@@ -1,0 +1,46 @@
+name: dotnet-runtime
+build-base: devel
+base: bare
+version: '10.0'
+summary: The .NET runtime
+description: |
+  .NET is a free, cross-platform, open source developer platform for building
+  many different types of applications. This image contains the .NET runtime,
+  but does not include bash, the .NET SDK nor a package manager.
+platforms:
+  amd64:
+  arm64:
+
+environment:
+  APP_UID: 584792
+  ASPNETCORE_URLS: 'http://+:8080'
+  DOTNET_RUNNING_IN_CONTAINER: 'true'
+  DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: 'true'
+
+run-user: _daemon_
+
+services:
+  dotnet-runtime:
+    override: replace
+    startup: enabled
+    command: "/usr/bin/dotnet [ --info ]"
+    on-success: shutdown
+    on-failure: shutdown
+
+parts:
+  runtime:
+    plugin: nil
+    stage-packages:
+      - base-files_base
+      - base-files_release-info
+      - base-files_chisel
+      - ca-certificates_data
+      - dotnet-runtime-10.0_core
+
+  deb-security-manifest:
+    after: [runtime]
+    plugin: make
+    source: https://github.com/canonical/rocks-security-manifest
+    source-type: git
+    source-branch: main
+    override-prime: gen_manifest
