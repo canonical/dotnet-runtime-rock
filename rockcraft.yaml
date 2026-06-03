@@ -1,5 +1,5 @@
 name: dotnet-runtime
-build-base: devel
+build-base: ubuntu@26.04
 base: bare
 version: '10.0'
 summary: The .NET runtime
