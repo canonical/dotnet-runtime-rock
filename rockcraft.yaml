@@ -10,6 +10,8 @@ description: |
 platforms:
   amd64:
   arm64:
+  s390x:
+  ppc64el:
 
 environment:
   APP_UID: 584792
