@@ -7,10 +7,9 @@
 # Spread
 .craft-spread*/
 .spread-reuse*
-spread/**/bin
-spread/**/obj
 
 # IDE
 .vs_code/
 .vscode/
 .idea/
+
