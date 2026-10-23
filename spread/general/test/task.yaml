@@ -1,4 +1,4 @@
-summary: test the 'my-rock-name' project
+summary: test the 'dotnet-runtime' project
 
 execute: |
   case "$(uname -m)" in
@@ -12,5 +12,5 @@ execute: |
   docker run --rm -v $(pwd):/app ubuntu:25.04 bash -c 'apt update && apt install dotnet-sdk-9.0 -y; for test_dir in "app_helloworld" "app_https-client"; do cd /app/${test_dir}/src && dotnet publish --no-self-contained -r '"$rid"'; done'
 
   for test_dir in "app_helloworld" "app_https-client"; do
-    docker run --rm -v $(pwd)/${test_dir}/src:/app:ro -e PEBBLE_VERBOSE=1 my-rock-name exec /usr/bin/dotnet "/app/bin/Release/net9.0/$rid/Hello.dll"
+    docker run --rm -v $(pwd)/${test_dir}/src:/app:ro -e PEBBLE_VERBOSE=1 dotnet-runtime:9.0-25.04 exec /usr/bin/dotnet "/app/bin/Release/net9.0/$rid/Hello.dll"
   done
